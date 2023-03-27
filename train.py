@@ -67,16 +67,16 @@ def main(config):
         'mixed': "atepc_datasets/mixed",
     }
     pretrained_bert_models = {
-        'camera': "bert-base-chinese",
-        'car': "bert-base-chinese",
-        'phone': "bert-base-chinese",
-        'notebook': "bert-base-chinese",
-        'laptop': "bert-base-uncased",
-        'restaurant': "bert-base-uncased",
+        'camera': "pretrained-models/bert-base-chinese",
+        'car': "pretrained-models/bert-base-chinese",
+        'phone': "pretrained-models/bert-base-chinese",
+        'notebook': "pretrained-models/bert-base-chinese",
+        'laptop': "pretrained-models/bert-base-uncased",
+        'restaurant': "pretrained-models/bert-base-uncased",
         # for loading domain-adapted BERT
         # 'restaurant': "../bert_pretrained_restaurant",
-        'twitter': "bert-base-uncased",
-        'mixed': "bert-base-multilingual-uncased",
+        'twitter': "pretrained-models/bert-base-uncased",
+        'mixed': "pretrained-models/bert-base-multilingual-uncased",
     }
 
     args.bert_model = pretrained_bert_models[args.dataset]
