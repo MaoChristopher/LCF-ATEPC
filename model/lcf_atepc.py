@@ -78,11 +78,14 @@ class LCF_ATEPC(BertForTokenClassification):
         return polarities
 
     # We are request for efficient lcf implementations.
+    import random
+
     def feature_dynamic_weighted(self, text_local_indices, polarities):
         text_ids = text_local_indices.detach().cpu().numpy()
         asp_ids = polarities.detach().cpu().numpy()
         weighted_text_raw_indices = np.ones((text_local_indices.size(0), text_local_indices.size(1), 768), dtype=np.float32)
-        SRD =self.args.SRD
+        SRD = self.args.SRD
+        noise_scale = self.args.noise_scale  # 噪声的标准差，可以作为超参数调整
         for text_i, asp_i in zip(range(len(text_ids)), range(len(asp_ids))):
             a_ids = np.flatnonzero(asp_ids[asp_i] + 1)
             text_len = np.flatnonzero(text_ids[text_i])[-1] + 1
@@ -95,15 +98,18 @@ class LCF_ATEPC(BertForTokenClassification):
             # a_ids[-1] + asp_len + 1 is the position of the last token_i [SEP]
             distances = np.zeros((text_len), dtype=np.float32)
             for i in range(len(distances)):
+                # 添加动态噪声
+                noise = random.gauss(0, noise_scale)
                 if abs(i - asp_avg_index) + asp_len / 2 > SRD:
                     distances[i] = 1 - (abs(i - asp_avg_index) + asp_len / 2
-                                        - SRD) / len(distances)
+                                        - SRD + noise) / len(distances)
                 else:
-                    distances[i] = 1
+                    distances[i] = 1 + noise
             for i in range(len(distances)):
                 weighted_text_raw_indices[text_i][i] = weighted_text_raw_indices[text_i][i] * distances[i]
         weighted_text_raw_indices = torch.from_numpy(weighted_text_raw_indices)
         return weighted_text_raw_indices.to(self.args.device)
+
 
     def feature_dynamic_mask(self, text_local_indices, polarities):
         text_ids = text_local_indices.detach().cpu().numpy()

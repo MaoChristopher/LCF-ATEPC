@@ -1,0 +1,32 @@
+log file: logs/230328-092026.log 添加了动态噪声在局部权重中
+--------------------------------------------------------------------------------
+Config 1 (totally 4 configs)
+No.1 training process of 5
+>>> dataset: phone
+>>> output_dir: output
+>>> SRD: 5
+>>> learning_rate: 3e-05
+>>> use_unique_bert: True
+>>> use_bert_spc: False
+>>> local_context_focus: cdm
+>>> num_train_epochs: 5.0
+>>> train_batch_size: 16
+>>> dropout: 0.0
+>>> max_seq_length: 80
+>>> eval_batch_size: 32
+>>> eval_steps: 20
+>>> gradient_accumulation_steps: 1
+>>> device: cuda:0
+>>> seed: 1
+>>> bert_model: pretrained-models/bert-base-chinese
+>>> data_dir: atepc_datasets/phone
+***** Running training *****
+  Num examples = 1988
+  Batch size = 16
+  Num steps = 620
+################################################################################
+Train 1 Epoch1
+################################################################################
+################################################################################
+Train 1 Epoch2
+################################################################################

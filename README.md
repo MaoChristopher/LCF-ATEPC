@@ -90,3 +90,6 @@ If this repository is helpful to you, please cite our paper:
 
 MIT License
 
+## revised
+
+需要自己添加bert的预训练模型 到工作目录
